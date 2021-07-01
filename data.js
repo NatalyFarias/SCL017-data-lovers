@@ -69,7 +69,7 @@ function crearCartas(cantPaginas, numPagina, dataLolAsArray) {
         const lolattack = document.createElement("h2");
         lolattack.textContent = "Attack     " + dataLolAsArray[ch].info.attack;
         const attackimg = document.createElement("img");
-        attackimg.src = "../src/images/icon-attack.png";
+        attackimg.src = "images/icon-attack.png";
 
         //Contenedor Defensa
         const contdefense = document.createElement("section");
@@ -77,7 +77,7 @@ function crearCartas(cantPaginas, numPagina, dataLolAsArray) {
         const loldefense = document.createElement("h2");
         loldefense.textContent = "Defense  " + dataLolAsArray[ch].info.defense;
         const defenseimg = document.createElement("img");
-        defenseimg.src = "../src/images/icon-defense.png";
+        defenseimg.src = "images/icon-defense.png";
 
         //Contenedor Magic
         const contmagic = document.createElement("section");
@@ -85,7 +85,7 @@ function crearCartas(cantPaginas, numPagina, dataLolAsArray) {
         const lolmagic = document.createElement("h2");
         lolmagic.textContent = "Magic  " + dataLolAsArray[ch].info.magic;
         const magicimg = document.createElement("img");
-        magicimg.src = "../src/images/icon-magic.png";
+        magicimg.src = "images/icon-magic.png";
 
         //Contenedor Dificultad
         const contdifficulty = document.createElement("section");
@@ -93,7 +93,7 @@ function crearCartas(cantPaginas, numPagina, dataLolAsArray) {
         const loldifficulty = document.createElement("h2");
         loldifficulty.textContent = "Difficulty  " + dataLolAsArray[ch].info.difficulty;
         const difficultyimg = document.createElement("img");
-        difficultyimg.src = "../src/images/icon-difficulty.png";
+        difficultyimg.src = "images/icon-difficulty.png";
 
         lolback.appendChild(loltags);
         lolback.appendChild(contattack);
@@ -264,6 +264,40 @@ filtrarPorTipo.addEventListener("change", (event) => {
         crearCartas(8, valorPaginaActual, filterPorTipoLol);
     }
 });
+
+//Filtrar po stats 
+const filtrarPorStats = document.getElementById("stats");
+let dataSorteada = dataLolAsArray;
+const dataPorDefecto = JSON.parse(JSON.stringify(dataLolAsArray)); //Object nuevo sin referencia.
+filtrarPorStats.addEventListener("change", (event) => {
+    contenedorCampeones.innerHTML = "";
+    const statsCampeon = String(event.target.value);
+    switch (statsCampeon) {
+        case "attack":
+            {
+                let attackCampeon = dataSorteada.sort(function(a, b) { return b.info.attack - a.info.attack });
+                crearCartas(8, valorPaginaActual, attackCampeon);
+                break;
+            }
+        case "defense":
+            {
+                let defenseCampeon = dataSorteada.sort(function(c, d) { return d.info.defense - c.info.defense });
+                crearCartas(8, valorPaginaActual, defenseCampeon);
+                break;
+            }
+        case "magic":
+            {
+                let magicCampeon = dataSorteada.sort(function(e, f) { return f.info.magic - e.info.magic });
+                crearCartas(8, valorPaginaActual, magicCampeon);
+                break;
+            }
+        default:
+            crearCartas(8, valorPaginaActual, dataPorDefecto);
+            break;
+    }
+});
+
+
 
 //Aqui esta la funcionalidad de ordenar campeones
 function filtrarPorRango(valorInicial, valorFinal) {
